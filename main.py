@@ -1,49 +1,36 @@
-import pygame as pg
 from settings import *
-from pygame.math import Vector2
-import sys
+from snake import Snake
 
-class Snake:
+class Core:
     def __init__(self):
         pg.init()
-        self.cell_size = CELL_SIZE
-        self.cell_number = CELL_NUMBER
-        self.screen = pg.display.set_mode((self.cell_number * self.cell_size, self.cell_number * self.cell_size))
-        
+        self.screen = pg.display.set_mode((CELL_NUMBER * CELL_SIZE, CELL_NUMBER * CELL_SIZE))
+        self.snake = Snake()
+
         self.clock = pg.time.Clock()
         self.delta_time = 0
         self.time = 0
 
         self.is_running = True
-        self.on_init()
 
-    def on_init(self):
-        self.body = [Vector2(5,10),Vector2(4,10),Vector2(3,10)]
-        self.direction =  Vector2(1,0)
+    def render(self):
+        self.screen.fill((175,215,70))
+        self.draw_grass()
+        pg.display.flip()
 
-        self.head_up = pg.image.load(HEAD_UP).convert_alpha()
-        self.head_down = pg.image.load(HEAD_DOWN).convert_alpha()
-        self.head_right = pg.image.load(HEAD_RIGHT).convert_alpha()
-        self.head_left = pg.image.load(HEAD_LEFT).convert_alpha()
-
-        self.tail_up = pg.image.load(TAIL_UP).convert_alpha()
-        self.tail_down = pg.image.load(TAIL_DOWN).convert_alpha()
-        self.tail_right = pg.image.load(TAIL_RIGHT).convert_alpha()
-        self.tail_left = pg.image.load(TAIL_LEFT).convert_alpha()  
-
-        
-        self.body_vertical = pg.image.load(BODY_VER).convert_alpha()
-        self.body_horizontal = pg.image.load(BODY_HOR).convert_alpha()
-
-        
-        self.body_tr = pg.image.load(BODY_TR).convert_alpha()
-        self.body_tl = pg.image.load(BODY_TL).convert_alpha()
-        self.body_br = pg.image.load(BODY_BR).convert_alpha()
-        self.body_bl = pg.image.load(BODY_BL).convert_alpha()
-        self.crunch_sound = pg.mixer.Sound(CRUNCH_WAV)
-
-        self.apple = pg.image.load(APPLE).convert_alpha()
-        self.font = pg.font.Font(FONT, 25)
+    def draw_grass(self):
+        grass_color = (167,209,61)
+        for row in range(CELL_NUMBER):
+            if row % 2 == 0:  
+                for col in range(CELL_NUMBER):
+                    if col % 2 == 0:
+                        grass_rect = pg.Rect(col * CELL_SIZE,row * CELL_SIZE,CELL_SIZE,CELL_SIZE)
+                        pg.draw.rect(self.screen,grass_color,grass_rect)
+            else:
+                for col in range(CELL_NUMBER):
+                    if col % 2 != 0:
+                        grass_rect = pg.Rect(col * CELL_SIZE,row * CELL_SIZE,CELL_SIZE,CELL_SIZE)
+                        pg.draw.rect(self.screen,grass_color,grass_rect)
 
     def update(self):
         self.delta_time = self.clock.tick(FPS)
@@ -59,9 +46,10 @@ class Snake:
         while self.is_running:
             self.handle_events()
             self.update()
+            self.render()
         pg.quit()
         sys.exit()
 
 if __name__ == "__main__":
-    snake = Snake()
-    snake.run()
+    core = Core()
+    core.run()

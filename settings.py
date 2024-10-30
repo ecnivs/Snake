@@ -1,3 +1,7 @@
+import pygame as pg
+from pygame.math import Vector2
+import sys
+
 # game settings
 CELL_SIZE = 40
 CELL_NUMBER = 20

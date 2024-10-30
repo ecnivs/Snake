@@ -5,6 +5,7 @@ class Snake:
         self.screen = screen
         self.body = [Vector2(5,10),Vector2(4,10),Vector2(3,10)]
         self.direction =  Vector2(1,0)
+        self.new_block = False
         self.on_init()
 
     def on_init(self):
@@ -77,3 +78,20 @@ class Snake:
             self.tail = self.tail_up
         elif tail_relation == Vector2(0,-1):
             self.tail = self.tail_down
+
+    def move_snake(self):
+        if self.new_block == True:
+            body_copy = self.body[:]
+            body_copy.insert(0,body_copy[0] + self.direction)
+            self.body = body_copy[:]
+            self.new_block=False
+        else:
+            body_copy = self.body[:-1]
+            body_copy.insert(0,body_copy[0] + self.direction)
+            self.body = body_copy[:]
+
+    def add_block(self):
+        self.new_block = True
+
+    def play_crunch_sound(self):
+        self.crunch_sound.play()

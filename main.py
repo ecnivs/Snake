@@ -39,6 +39,8 @@ class Core:
                         pg.draw.rect(self.screen,self.grass_color,grass_rect)
 
     def update(self):
+        self.snake.move_snake()
+
         self.delta_time = self.clock.tick(FPS)
         self.time = pg.time.get_ticks() * 0.001
         pg.display.set_caption(f'{self.clock.get_fps() :.0f}')
@@ -47,15 +49,31 @@ class Core:
         for event in pg.event.get():
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 self.is_running = False
+            if event.type == SCREEN_UPDATE:
+                self.update()
+            if event.type == pg.KEYDOWN:
+                if event.key == pg.K_UP:
+                    if self.snake.direction.y !=1:
+                        self.snake.direction = Vector2(0,-1)
+                if event.key == pg.K_DOWN: 
+                    if self.snake.direction.y != -1:
+                        self.snake.direction = Vector2(0,1)
+                if event.key == pg.K_LEFT: 
+                    if self.snake.direction.x !=1:
+                        self.snake.direction = Vector2(-1,0)
+                if event.key == pg.K_RIGHT: 
+                    if self.snake.direction.x != -1:
+                        self.snake.direction = Vector2(1,0)
 
     def run(self):
         while self.is_running:
             self.handle_events()
-            self.update()
             self.render()
         pg.quit()
         sys.exit()
 
 if __name__ == "__main__":
     core = Core()
+    SCREEN_UPDATE = pg.USEREVENT
+    pg.time.set_timer(SCREEN_UPDATE,150)
     core.run()

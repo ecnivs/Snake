@@ -1,5 +1,6 @@
 from settings import *
 from snake import Snake
+from fruit import Fruit
 
 class Core:
     def __init__(self):
@@ -15,15 +16,35 @@ class Core:
 
     def on_init(self):
         self.snake = Snake(self.screen)
+        self.fruit = Fruit(self.screen)
         self.grass_color = (167,209,61)
-        self.apple = pg.image.load(APPLE).convert_alpha()
         self.font = pg.font.Font(FONT, 25)
 
     def render(self):
         self.screen.fill((175,215,70))
         self.draw_grass()
+        self.fruit.draw_fruit()
         self.snake.draw_snake()
+        self.draw_score()
+        self.check_fail()
         pg.display.flip()
+
+    def check_collision(self):
+        if self.fruit.pos == self.snake.body[0]:
+            self.fruit.randomize()
+            self.snake.add_block()
+            self.snake.play_crunch_sound()
+
+        for block in self.snake.body[1:]:
+            if block == self.fruit.pos:
+                self.fruit.randomize()
+
+    def check_fail(self):
+        if not 0 <= self.snake.body[0].x <= CELL_NUMBER or not 0<= self.snake.body[0].y <= CELL_NUMBER:
+            self.is_running = False
+        for block in self.snake.body[1:]:
+            if self.snake.body[0] == block : 
+                self.is_running = False
 
     def draw_grass(self):
         for row in range(CELL_NUMBER):
@@ -38,8 +59,20 @@ class Core:
                         grass_rect = pg.Rect(col * CELL_SIZE,row * CELL_SIZE,CELL_SIZE,CELL_SIZE)
                         pg.draw.rect(self.screen,self.grass_color,grass_rect)
 
+    def draw_score(self):
+        score_text = str(len(self.snake.body) - 3)
+        score_surface = self.font.render(score_text,True,(56,47,12))
+        score_x = int(CELL_SIZE * CELL_NUMBER - 60)
+        score_y = int(CELL_SIZE * CELL_NUMBER - 40)
+        score_rect = score_surface.get_rect(center = (score_x,score_y))
+        apple_rect = self.fruit.apple.get_rect(midright = (score_rect.left,score_rect.centery))
+
+        self.screen.blit(score_surface,score_rect)
+        self.screen.blit(self.fruit.apple,apple_rect)
+
     def update(self):
         self.snake.move_snake()
+        self.check_collision()
 
         self.delta_time = self.clock.tick(FPS)
         self.time = pg.time.get_ticks() * 0.001
@@ -64,6 +97,8 @@ class Core:
                 if event.key == pg.K_RIGHT: 
                     if self.snake.direction.x != -1:
                         self.snake.direction = Vector2(1,0)
+
+        pg.display.update()
 
     def run(self):
         while self.is_running:

@@ -1,6 +1,7 @@
 import pygame as pg
 from pygame.math import Vector2
 import sys
+import random
 
 # game settings
 CELL_SIZE = 40

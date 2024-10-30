@@ -2,6 +2,9 @@
 ## Overview
 A simple, classic snake game built in Python, featuring real-time gameplay and smooth controls.
 
+![image](https://github.com/user-attachments/assets/828144cc-7fcb-4b16-a8a8-780c605f9fa9)
+
+
 ## Features
 * **Responsive Controls**: Control the snake with arrow keys.
 * **Score Tracking**: Score increases as the snake grows with each food eaten.
@@ -25,5 +28,9 @@ pip install pygame
 ```bash
 python main.py
 ```
+## How to Play
+* **Arrow keys**: Control snake direction.
+* **Objective**: Eat food to grow the snake and score points.
+* **Avoid collisions** with walls and your own tail to keep playing.
 
 ### I'd appreciate any feedback or code reviews you might have!

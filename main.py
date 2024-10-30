@@ -11,6 +11,9 @@ class Core:
         self.delta_time = 0
         self.time = 0
 
+        self.last_direction_change_time = 0
+        self.direction_change_cooldown = 200
+
         self.is_running = True
         self.on_init()
 
@@ -62,9 +65,7 @@ class Core:
     def draw_score(self):
         score_text = str(len(self.snake.body) - 3)
         score_surface = self.font.render(score_text,True,(56,47,12))
-        score_x = int(CELL_SIZE * CELL_NUMBER - 60)
-        score_y = int(CELL_SIZE * CELL_NUMBER - 40)
-        score_rect = score_surface.get_rect(center = (score_x,score_y))
+        score_rect = score_surface.get_rect(center = (50, 30))
         apple_rect = self.fruit.apple.get_rect(midright = (score_rect.left,score_rect.centery))
 
         self.screen.blit(score_surface,score_rect)
@@ -79,24 +80,29 @@ class Core:
         pg.display.set_caption(f'{self.clock.get_fps() :.0f}')
 
     def handle_events(self):
+        current_time = pg.time.get_ticks()
         for event in pg.event.get():
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 self.is_running = False
+
             if event.type == SCREEN_UPDATE:
                 self.update()
-            if event.type == pg.KEYDOWN:
-                if event.key == pg.K_UP:
-                    if self.snake.direction.y !=1:
-                        self.snake.direction = Vector2(0,-1)
-                if event.key == pg.K_DOWN: 
-                    if self.snake.direction.y != -1:
-                        self.snake.direction = Vector2(0,1)
-                if event.key == pg.K_LEFT: 
-                    if self.snake.direction.x !=1:
-                        self.snake.direction = Vector2(-1,0)
-                if event.key == pg.K_RIGHT: 
-                    if self.snake.direction.x != -1:
-                        self.snake.direction = Vector2(1,0)
+
+        keys = pg.key.get_pressed()
+
+        if current_time - self.last_direction_change_time > self.direction_change_cooldown:
+            if keys[pg.K_UP] and self.snake.direction.y != 1:
+                self.snake.direction = Vector2(0, -1)
+                self.last_direction_change_time = current_time
+            if keys[pg.K_DOWN] and self.snake.direction.y != -1:
+                self.snake.direction = Vector2(0, 1)
+                self.last_direction_change_time = current_time
+            if keys[pg.K_LEFT] and self.snake.direction.x != 1:
+                self.snake.direction = Vector2(-1, 0)
+                self.last_direction_change_time = current_time
+            if keys[pg.K_RIGHT] and self.snake.direction.x != -1:
+                self.snake.direction = Vector2(1, 0)
+                self.last_direction_change_time = current_time
 
         pg.display.update()
 

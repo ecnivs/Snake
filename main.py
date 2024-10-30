@@ -5,32 +5,38 @@ class Core:
     def __init__(self):
         pg.init()
         self.screen = pg.display.set_mode((CELL_NUMBER * CELL_SIZE, CELL_NUMBER * CELL_SIZE))
-        self.snake = Snake()
 
         self.clock = pg.time.Clock()
         self.delta_time = 0
         self.time = 0
 
         self.is_running = True
+        self.on_init()
+
+    def on_init(self):
+        self.snake = Snake(self.screen)
+        self.grass_color = (167,209,61)
+        self.apple = pg.image.load(APPLE).convert_alpha()
+        self.font = pg.font.Font(FONT, 25)
 
     def render(self):
         self.screen.fill((175,215,70))
         self.draw_grass()
+        self.snake.draw_snake()
         pg.display.flip()
 
     def draw_grass(self):
-        grass_color = (167,209,61)
         for row in range(CELL_NUMBER):
             if row % 2 == 0:  
                 for col in range(CELL_NUMBER):
                     if col % 2 == 0:
                         grass_rect = pg.Rect(col * CELL_SIZE,row * CELL_SIZE,CELL_SIZE,CELL_SIZE)
-                        pg.draw.rect(self.screen,grass_color,grass_rect)
+                        pg.draw.rect(self.screen,self.grass_color,grass_rect)
             else:
                 for col in range(CELL_NUMBER):
                     if col % 2 != 0:
                         grass_rect = pg.Rect(col * CELL_SIZE,row * CELL_SIZE,CELL_SIZE,CELL_SIZE)
-                        pg.draw.rect(self.screen,grass_color,grass_rect)
+                        pg.draw.rect(self.screen,self.grass_color,grass_rect)
 
     def update(self):
         self.delta_time = self.clock.tick(FPS)

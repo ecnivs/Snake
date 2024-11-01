@@ -20,7 +20,7 @@ class Core:
     def on_init(self):
         self.snake = Snake(self.screen)
         self.fruit = Fruit(self.screen)
-        self.grass_color = (167,209,61)
+        self.grass_color = (167, 209, 61)
         self.font = pg.font.Font(FONT, 25)
 
     def render(self):
@@ -43,33 +43,33 @@ class Core:
                 self.fruit.randomize()
 
     def check_fail(self):
-        if not 0 <= self.snake.body[0].x <= CELL_NUMBER or not 0<= self.snake.body[0].y <= CELL_NUMBER:
+        if not 0 <= self.snake.body[0].x <= CELL_NUMBER or not 0 <= self.snake.body[0].y <= CELL_NUMBER:
             self.is_running = False
         for block in self.snake.body[1:]:
-            if self.snake.body[0] == block : 
+            if self.snake.body[0] == block :
                 self.is_running = False
 
     def draw_grass(self):
         for row in range(CELL_NUMBER):
-            if row % 2 == 0:  
+            if row % 2 == 0:
                 for col in range(CELL_NUMBER):
                     if col % 2 == 0:
-                        grass_rect = pg.Rect(col * CELL_SIZE,row * CELL_SIZE,CELL_SIZE,CELL_SIZE)
-                        pg.draw.rect(self.screen,self.grass_color,grass_rect)
+                        grass_rect = pg.Rect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                        pg.draw.rect(self.screen, self.grass_color, grass_rect)
             else:
                 for col in range(CELL_NUMBER):
                     if col % 2 != 0:
-                        grass_rect = pg.Rect(col * CELL_SIZE,row * CELL_SIZE,CELL_SIZE,CELL_SIZE)
-                        pg.draw.rect(self.screen,self.grass_color,grass_rect)
+                        grass_rect = pg.Rect(col * CELL_SIZE, row * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                        pg.draw.rect(self.screen, self.grass_color, grass_rect)
 
     def draw_score(self):
         score_text = str(len(self.snake.body) - 3)
-        score_surface = self.font.render(score_text,True,(56,47,12))
+        score_surface = self.font.render(score_text, True,(56, 47, 12))
         score_rect = score_surface.get_rect(center = (50, 30))
-        apple_rect = self.fruit.apple.get_rect(midright = (score_rect.left,score_rect.centery))
+        apple_rect = self.fruit.apple.get_rect(midright = (score_rect.left, score_rect.centery))
 
-        self.screen.blit(score_surface,score_rect)
-        self.screen.blit(self.fruit.apple,apple_rect)
+        self.screen.blit(score_surface, score_rect)
+        self.screen.blit(self.fruit.apple, apple_rect)
 
     def update(self):
         self.snake.move_snake()
@@ -103,7 +103,6 @@ class Core:
             if keys[pg.K_RIGHT] and self.snake.direction.x != -1:
                 self.snake.direction = Vector2(1, 0)
                 self.last_direction_change_time = current_time
-
         pg.display.update()
 
     def run(self):
@@ -116,5 +115,5 @@ class Core:
 if __name__ == "__main__":
     core = Core()
     SCREEN_UPDATE = pg.USEREVENT
-    pg.time.set_timer(SCREEN_UPDATE,150)
+    pg.time.set_timer(SCREEN_UPDATE, 150)
     core.run()

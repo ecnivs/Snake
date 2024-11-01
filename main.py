@@ -75,7 +75,7 @@ class Core:
         self.snake.move_snake()
         self.check_collision()
 
-        self.delta_time = self.clock.tick(FPS)
+        self.delta_time = self.clock.tick()
         self.time = pg.time.get_ticks() * 0.001
         pg.display.set_caption(f'{self.clock.get_fps() :.0f}')
 
@@ -103,6 +103,7 @@ class Core:
             if keys[pg.K_RIGHT] and self.snake.direction.x != -1:
                 self.snake.direction = Vector2(1, 0)
                 self.last_direction_change_time = current_time
+
         pg.display.update()
 
     def run(self):

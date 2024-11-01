@@ -7,8 +7,6 @@ import random
 CELL_SIZE = 40
 CELL_NUMBER = 20
 
-FPS = 60
-
 # path
 HEAD_UP = 'assets/head_up.png'
 HEAD_DOWN = 'assets/head_down.png'

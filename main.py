@@ -85,7 +85,7 @@ class Core:
             if event.type == pg.QUIT or (event.type == pg.KEYDOWN and event.key == pg.K_ESCAPE):
                 self.is_running = False
 
-            if event.type == SCREEN_UPDATE:
+            if event.type == UPDATE:
                 self.update()
 
         keys = pg.key.get_pressed()
@@ -115,6 +115,6 @@ class Core:
 
 if __name__ == "__main__":
     core = Core()
-    SCREEN_UPDATE = pg.USEREVENT
-    pg.time.set_timer(SCREEN_UPDATE, 150)
+    UPDATE = pg.USEREVENT # custom event to call update function
+    pg.time.set_timer(UPDATE, 150) # every 150 ms
     core.run()

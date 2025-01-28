@@ -10,9 +10,4 @@ This repository contains multiple versions of the Snake game:
 - **Rust**: A version built using Rust.
 - **C**: Terminal snake using C.
 
-## How to Play
-- **Arrow keys**: Control snake direction.
-- **Objective**: Eat food to grow the snake and score points.
-- **Avoid collisions** with walls and your own tail to keep playing.
-
 ### I'd appreciate any feedback or code reviews you might have!

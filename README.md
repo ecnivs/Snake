@@ -6,13 +6,13 @@ A simple, classic snake game built in Python, featuring real-time gameplay and s
 ## Available Implementations
 This repository contains multiple versions of the Snake game:
 
-* **Python**: A version built using Python and Pygame.
-* **Rust**: A version built using Rust.
-* C: Terminal snake using C.
+- **Python**: A version built using Python and Pygame.
+- **Rust**: A version built using Rust.
+- **C**: Terminal snake using C.
 
 ## How to Play
-* **Arrow keys**: Control snake direction.
-* **Objective**: Eat food to grow the snake and score points.
-* **Avoid collisions** with walls and your own tail to keep playing.
+- **Arrow keys**: Control snake direction.
+- **Objective**: Eat food to grow the snake and score points.
+- **Avoid collisions** with walls and your own tail to keep playing.
 
 ### I'd appreciate any feedback or code reviews you might have!

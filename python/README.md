@@ -1,6 +1,6 @@
 # Snake 🐍
 ## Overview
-A simple, classic snake game built in Pyth qon, featuring real-time gameplay and smooth controls.
+A simple, classic snake game built in Python, featuring real-time gameplay and smooth controls.
 
 ![image](https://github.com/user-attachments/assets/828144cc-7fcb-4b16-a8a8-780c605f9fa9)
 

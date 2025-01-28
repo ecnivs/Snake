@@ -8,6 +8,7 @@ This repository contains multiple versions of the Snake game:
 
 * **Python**: A version built using Python and Pygame.
 * **Rust**: A version built using Rust.
+* C: Terminal snake using C.
 
 ## How to Play
 * **Arrow keys**: Control snake direction.
